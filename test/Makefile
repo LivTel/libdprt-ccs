@@ -1,9 +1,8 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.3 1999-08-25 10:03:53 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.4 1999-08-31 12:47:19 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
 
-LIBDIR = $(LT_BIN_HOME)/lib
 INCDIR = $(DPRT_SRC_HOME)/include
 
 CFLAGS = -g -I$(INCDIR) -c
@@ -13,8 +12,8 @@ OBJS		=	$(SRCS:%.c=%.o)
 
 top: $(DPRT_BIN_HOME)/test/dprt_test
 
-$(DPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LIBDIR)/libdprt.a 
-	cc -o $@ dprt_test.o $(LIBDIR)/libdprt.a $(TIMELIB) -lm -lc
+$(DPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LT_LIB_HOME)/libdprt.a 
+	cc -o $@ dprt_test.o $(LT_LIB_HOME)/libdprt.a $(TIMELIB) -lm -lc
 
 depend:
 	makedepend -- $(CFLAGS) -- $(SRCS)
@@ -33,6 +32,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.3  1999/08/25 10:03:53  cjm
+# Updated makefile to take account of ltccd1 directory changes.
+#
 #
 
 # DO NOT DELETE
