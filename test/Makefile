@@ -1,25 +1,27 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.11 2004-01-30 16:45:05 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.12 2004-03-31 08:57:01 cjm Exp $
 
+include	../../../Makefile.common
 include ../../Makefile.common
 include ../Makefile.common
 
-INCDIR 		= $(LIBDPRT_SRC_HOME)/include
-DOCSDIR 	= $(LIBDPRT_DOC_HOME)/test
+LIBNAME		= $(LIBDPRT_HOME)_$(CCS_HOME)
+INCDIR 		= $(LIBDPRT_CCS_SRC_HOME)/include
+DOCSDIR 	= $(LIBDPRT_CCS_DOC_HOME)/test
 DOCFLAGS 	= -static
-BINDIR		= $(LIBDPRT_BIN_HOME)/test/${HOSTTYPE}
+BINDIR		= $(LIBDPRT_CCS_BIN_HOME)/test/${HOSTTYPE}
 
 CFLAGS 		= -g -I$(INCDIR) 
 
 SRCS 		= dprt_test.c
-OBJS 		= $(SRCS:%.c=${BINDIR}/%.o)
+OBJS 		= $(SRCS:%.c=$(BINDIR)/%.o)
 DOCS 		= $(SRCS:%.c=$(DOCSDIR)/%.html)
 
 top: ${BINDIR}/dprt_test docs
 
-${BINDIR}/dprt_test: ${BINDIR}/dprt_test.o $(LT_LIB_HOME)/libdprt.so
-	$(CC) -o $@ ${BINDIR}/dprt_test.o -L$(LT_LIB_HOME) -ldprt $(TIMELIB) -lm -lc
+${BINDIR}/dprt_test: $(BINDIR)/dprt_test.o $(LT_LIB_HOME)/$(LIBNAME).so
+	$(CC) -o $@ $(BINDIR)/dprt_test.o -L$(LT_LIB_HOME) -ldprt_ccs $(TIMELIB) -lm -lc
 
-${BINDIR}/%.o: %.c
+$(BINDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 docs: $(DOCS)
@@ -47,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.11  2004/01/30 16:45:05  cjm
+# Added library directory directive.
+#
 # Revision 0.10  2002/05/20 09:47:02  cjm
 # CHanged location on binaries/object files.
 #
@@ -77,15 +82,12 @@ checkout:
 
 # DO NOT DELETE
 
-dprt_test.o: /usr/include/stdio.h /usr/include/features.h
-dprt_test.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
-dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stddef.h
-dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stdarg.h
-dprt_test.o: /usr/include/bits/types.h /usr/include/libio.h
-dprt_test.o: /usr/include/_G_config.h /usr/include/bits/stdio_lim.h
-dprt_test.o: /usr/include/stdlib.h /usr/include/sys/types.h
-dprt_test.o: /usr/include/time.h /usr/include/endian.h
-dprt_test.o: /usr/include/bits/endian.h /usr/include/sys/select.h
-dprt_test.o: /usr/include/bits/select.h /usr/include/bits/sigset.h
-dprt_test.o: /usr/include/sys/sysmacros.h /usr/include/alloca.h
-dprt_test.o: /usr/include/strings.h /home/dev/src/libdprt/include/dprt.h
+dprt_test.o: /usr/include/stdio.h /usr/include/sys/feature_tests.h
+dprt_test.o: /usr/include/sys/isa_defs.h /usr/include/sys/va_list.h
+dprt_test.o: /usr/include/stdio_tag.h /usr/include/stdio_impl.h
+dprt_test.o: /usr/include/stdlib.h /usr/include/strings.h
+dprt_test.o: /usr/include/sys/types.h /usr/include/sys/machtypes.h
+dprt_test.o: /usr/include/sys/int_types.h /usr/include/sys/select.h
+dprt_test.o: /usr/include/sys/time.h /usr/include/sys/time.h
+dprt_test.o: /usr/include/string.h
+dprt_test.o: /space/home/dev/src/libdprt/ccs/include/dprt.h
