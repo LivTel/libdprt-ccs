@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.5 1999-09-08 13:57:49 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.6 1999-09-08 15:26:33 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -12,8 +12,8 @@ OBJS		=	$(SRCS:%.c=%.o)
 
 top: $(DPRT_BIN_HOME)/test/dprt_test
 
-$(DPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LT_LIB_HOME)/libdprt.a 
-	cc -o $@ dprt_test.o $(LT_LIB_HOME)/libdprt.a $(TIMELIB) -lm -lc
+$(DPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LT_LIB_HOME)/libdprt.so
+	cc -o $@ dprt_test.o -ldprt $(TIMELIB) -lm -lc
 
 depend:
 	makedepend -- $(CFLAGS) -- $(SRCS)
@@ -32,6 +32,10 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.5  1999/09/08 13:57:49  cjm
+# Changed checkin target to accept failure(due to files not being checked out locked).
+# Changed checkin target to use CI_OPTIONS.
+#
 # Revision 0.4  1999/08/31 12:47:19  cjm
 # Replaced LIBDIR with LT_LIB_HOME
 #
