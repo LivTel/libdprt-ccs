@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.4 1999-08-31 12:47:19 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.5 1999-09-08 13:57:49 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -25,13 +25,16 @@ tidy:
 	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
 
 checkin:
-	$(CI) $(SRCS)
+	-$(CI) $(CI_OPTIONS) $(SRCS)
 
 checkout:
 	$(CO) $(CO_OPTIONS) $(SRCS)
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.4  1999/08/31 12:47:19  cjm
+# Replaced LIBDIR with LT_LIB_HOME
+#
 # Revision 0.3  1999/08/25 10:03:53  cjm
 # Updated makefile to take account of ltccd1 directory changes.
 #
