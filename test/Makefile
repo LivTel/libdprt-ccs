@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.1 1999-06-24 11:09:08 dev Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.2 1999-06-30 15:08:22 dev Exp $
 
 include ../../Makefile.common
 
@@ -19,7 +19,7 @@ depend:
 	makedepend -- $(CFLAGS) -- $(SRCS)
 
 clean:
-	$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
+	$(RM) $(RM_OPTIONS) dprt_test $(OBJS) $(TIDY_OPTIONS)
 
 tidy:
 	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
