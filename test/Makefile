@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.9 2001-05-15 19:20:24 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.10 2002-05-20 09:47:02 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -6,17 +6,21 @@ include ../Makefile.common
 INCDIR 		= $(LIBDPRT_SRC_HOME)/include
 DOCSDIR 	= $(LIBDPRT_DOC_HOME)/test
 DOCFLAGS 	= -static
+BINDIR		= $(LIBDPRT_BIN_HOME)/test/${HOSTTYPE}
 
-CFLAGS 		= -g -I$(INCDIR) -c
+CFLAGS 		= -g -I$(INCDIR)
 
 SRCS 		= dprt_test.c
-OBJS 		= $(SRCS:%.c=%.o)
+OBJS 		= $(SRCS:%.c=${BINDIR}/%.o)
 DOCS 		= $(SRCS:%.c=$(DOCSDIR)/%.html)
 
-top: $(LIBDPRT_BIN_HOME)/test/dprt_test docs
+top: ${BINDIR}/dprt_test docs
 
-$(LIBDPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LT_LIB_HOME)/libdprt.so
-	cc -o $@ dprt_test.o -ldprt $(TIMELIB) -lm -lc
+${BINDIR}/dprt_test: ${BINDIR}/dprt_test.o $(LT_LIB_HOME)/libdprt.so
+	$(CC) -o $@ ${BINDIR}/dprt_test.o -ldprt $(TIMELIB) -lm -lc
+
+${BINDIR}/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 docs: $(DOCS)
 
@@ -27,7 +31,7 @@ depend:
 	makedepend -- $(CFLAGS) -- $(SRCS)
 
 clean:
-	-$(RM) $(RM_OPTIONS) $(LIBDPRT_BIN_HOME)/test/dprt_test $(OBJS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) ${BINDIR}/dprt_test $(OBJS) $(TIDY_OPTIONS)
 
 tidy:
 	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
@@ -43,6 +47,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.9  2001/05/15 19:20:24  cjm
+# Added docs make.
+#
 # Revision 0.8  2001/05/15 18:38:49  cjm
 # Split dprt into libdprt.
 #
@@ -67,11 +74,15 @@ checkout:
 
 # DO NOT DELETE
 
-dprt_test.o: /usr/include/stdio.h /usr/include/sys/feature_tests.h
-dprt_test.o: /usr/include/sys/isa_defs.h /usr/include/sys/va_list.h
-dprt_test.o: /usr/include/stdio_tag.h /usr/include/stdio_impl.h
-dprt_test.o: /usr/include/stdlib.h /usr/include/strings.h
-dprt_test.o: /usr/include/sys/types.h /usr/include/sys/machtypes.h
-dprt_test.o: /usr/include/sys/int_types.h /usr/include/sys/select.h
-dprt_test.o: /usr/include/sys/time.h /usr/include/sys/time.h
-dprt_test.o: /usr/include/string.h /space/home/dev/src/libdprt/include/dprt.h
+dprt_test.o: /usr/include/stdio.h /usr/include/features.h
+dprt_test.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
+dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stddef.h
+dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stdarg.h
+dprt_test.o: /usr/include/bits/types.h /usr/include/libio.h
+dprt_test.o: /usr/include/_G_config.h /usr/include/bits/stdio_lim.h
+dprt_test.o: /usr/include/stdlib.h /usr/include/sys/types.h
+dprt_test.o: /usr/include/time.h /usr/include/endian.h
+dprt_test.o: /usr/include/bits/endian.h /usr/include/sys/select.h
+dprt_test.o: /usr/include/bits/select.h /usr/include/bits/sigset.h
+dprt_test.o: /usr/include/sys/sysmacros.h /usr/include/alloca.h
+dprt_test.o: /usr/include/strings.h /home/dev/src/libdprt/include/dprt.h
