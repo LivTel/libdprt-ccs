@@ -1,6 +1,6 @@
 /* dprt_test.c  -*- mode: Fundamental;-*-
 ** dprt_test [-c][-e][-help] <filename>
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.1 1999-06-24 11:10:24 dev Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.2 2002-05-20 09:42:30 cjm Exp $
 */
 /**
  * dprt_test.c Tests libdprt.a, the statically linked version of the Data Pipeline Real Time
@@ -35,7 +35,7 @@ static int Parse_Args(int argc,char *argv[]);
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt_test.c,v 0.1 1999-06-24 11:10:24 dev Exp $";
+static char rcsid[] = "$Id: dprt_test.c,v 0.2 2002-05-20 09:42:30 cjm Exp $";
 /**
  * Filename of file to be processed.
  */
@@ -74,6 +74,8 @@ int main(int argc, char *argv[])
 		fprintf(stderr,"dprt_test: No filename specified.\n");
 		return 1;
 	}
+/* initialise the DpRt */
+	DpRt_Initialise();
 	if(Reduce_Type == REDUCE_TYPE_EXPOSE)
 	{
 		fprintf(stdout,"Reducing file '%s' as an exposure.\n",Filename);
@@ -164,6 +166,9 @@ static void Help(void)
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.1  1999/06/24 11:10:24  dev
+** initial revision
+**
 */
 
 
