@@ -1,31 +1,31 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.7 1999-12-10 12:24:43 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.8 2001-05-15 18:38:49 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
 
-INCDIR = $(DPRT_SRC_HOME)/include
+INCDIR = $(LIBDPRT_SRC_HOME)/include
 
 CFLAGS = -g -I$(INCDIR) -c
 
-SRCS = dprt_test.c
-OBJS		=	$(SRCS:%.c=%.o)
+SRCS 	= dprt_test.c
+OBJS 	= $(SRCS:%.c=%.o)
 
-top: $(DPRT_BIN_HOME)/test/dprt_test
+top: $(LIBDPRT_BIN_HOME)/test/dprt_test
 
-$(DPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LT_LIB_HOME)/libdprt.so
+$(LIBDPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LT_LIB_HOME)/libdprt.so
 	cc -o $@ dprt_test.o -ldprt $(TIMELIB) -lm -lc
 
 depend:
 	makedepend -- $(CFLAGS) -- $(SRCS)
 
 clean:
-	-$(RM) $(RM_OPTIONS) $(DPRT_BIN_HOME)/test/dprt_test $(OBJS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(LIBDPRT_BIN_HOME)/test/dprt_test $(OBJS) $(TIDY_OPTIONS)
 
 tidy:
 	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
 
 backup: tidy
-	-$(RM) $(RM_OPTIONS) $(DPRT_BIN_HOME)/test/dprt_test
+	-$(RM) $(RM_OPTIONS) $(LIBDPRT_BIN_HOME)/test/dprt_test
 
 checkin:
 	-$(CI) $(CI_OPTIONS) $(SRCS)
@@ -35,6 +35,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.7  1999/12/10 12:24:43  cjm
+# Added backup target.
+#
 # Revision 0.6  1999/09/08 15:26:33  cjm
 # Changed dprt_test so that it links against the shared library.
 # This is the default library built so this will work with a top-level make.
@@ -60,4 +63,4 @@ dprt_test.o: /usr/include/stdlib.h /usr/include/strings.h
 dprt_test.o: /usr/include/sys/types.h /usr/include/sys/machtypes.h
 dprt_test.o: /usr/include/sys/int_types.h /usr/include/sys/select.h
 dprt_test.o: /usr/include/sys/time.h /usr/include/sys/time.h
-dprt_test.o: /usr/include/string.h /space/home/dev/src/dprt/include/dprt.h
+dprt_test.o: /usr/include/string.h /space/home/dev/src/libdprt/include/dprt.h
