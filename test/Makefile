@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.12 2004-03-31 08:57:01 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.13 2004-03-31 16:46:59 cjm Exp $
 
 include	../../../Makefile.common
 include ../../Makefile.common
@@ -10,7 +10,7 @@ DOCSDIR 	= $(LIBDPRT_CCS_DOC_HOME)/test
 DOCFLAGS 	= -static
 BINDIR		= $(LIBDPRT_CCS_BIN_HOME)/test/${HOSTTYPE}
 
-CFLAGS 		= -g -I$(INCDIR) 
+CFLAGS 		= -g -I$(INCDIR) -I$(JNIGENERALINCDIR)
 
 SRCS 		= dprt_test.c
 OBJS 		= $(SRCS:%.c=$(BINDIR)/%.o)
@@ -19,7 +19,7 @@ DOCS 		= $(SRCS:%.c=$(DOCSDIR)/%.html)
 top: ${BINDIR}/dprt_test docs
 
 ${BINDIR}/dprt_test: $(BINDIR)/dprt_test.o $(LT_LIB_HOME)/$(LIBNAME).so
-	$(CC) -o $@ $(BINDIR)/dprt_test.o -L$(LT_LIB_HOME) -ldprt_ccs $(TIMELIB) -lm -lc
+	$(CC) -o $@ $(BINDIR)/dprt_test.o -L$(LT_LIB_HOME) -ldprt_ccs -ldprt_jni_general $(TIMELIB) -lm -lc
 
 $(BINDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -30,7 +30,7 @@ $(DOCS) : $(SRCS)
 	-$(CDOC) -d $(DOCSDIR) -h $(INCDIR) $(DOCFLAGS) $(SRCS)
 
 depend:
-	makedepend -- $(CFLAGS) -- $(SRCS)
+	makedepend -p$(BINDIR)/ -- $(CFLAGS) -- $(SRCS)
 
 clean:
 	-$(RM) $(RM_OPTIONS) ${BINDIR}/dprt_test $(OBJS) $(TIDY_OPTIONS)
@@ -49,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.12  2004/03/31 08:57:01  cjm
+# Library now repackaged as libdprt_ccs. Directory changed to ccs specific one.
+#
 # Revision 0.11  2004/01/30 16:45:05  cjm
 # Added library directory directive.
 #
@@ -82,12 +85,23 @@ checkout:
 
 # DO NOT DELETE
 
-dprt_test.o: /usr/include/stdio.h /usr/include/sys/feature_tests.h
-dprt_test.o: /usr/include/sys/isa_defs.h /usr/include/sys/va_list.h
-dprt_test.o: /usr/include/stdio_tag.h /usr/include/stdio_impl.h
-dprt_test.o: /usr/include/stdlib.h /usr/include/strings.h
-dprt_test.o: /usr/include/sys/types.h /usr/include/sys/machtypes.h
-dprt_test.o: /usr/include/sys/int_types.h /usr/include/sys/select.h
-dprt_test.o: /usr/include/sys/time.h /usr/include/sys/time.h
-dprt_test.o: /usr/include/string.h
-dprt_test.o: /space/home/dev/src/libdprt/ccs/include/dprt.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/stdio.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/features.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/sys/cdefs.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/gnu/stubs.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2/include/stddef.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/types.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/wordsize.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/typesizes.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/libio.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/_G_config.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/wchar.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/wchar.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/gconv.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2/include/stdarg.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/stdio_lim.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/sys_errlist.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/stdlib.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/strings.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /home/dev/src/libdprt/ccs/include/dprt.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /home/dev/src/libdprt/jni_general/include/dprt_jni_general.h
