@@ -1,10 +1,12 @@
-/* dprt_test.c  -*- mode: Fundamental;-*-
-** dprt_test [-c][-e][-help] <filename>
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.4 2002-05-20 11:43:04 cjm Exp $
+/* dprt_test.c
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.5 2002-11-26 18:13:36 cjm Exp $
 */
 /**
  * dprt_test.c Tests libdprt.a, the statically linked version of the Data Pipeline Real Time
  * reduction library. Note you cannot check Aborting reductions with this software at the moment.
+ * <pre>
+ * dprt_test [-b][-c][-e][-f][-help] <filename>
+ * </pre>
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,6 +24,14 @@
  * Reduce Type definition. This means the file should be reduced as an calibration.
  */
 #define REDUCE_TYPE_CALIBRATION		2
+/**
+ * Reduce Type definition. This means the file should be a directory, containing bias frames to make a master from.
+ */
+#define REDUCE_TYPE_MAKE_MASTER_BIAS	3
+/**
+ * Reduce Type definition. This means the file should be a directory, containing flat frames to make a master from.
+ */
+#define REDUCE_TYPE_MAKE_MASTER_FLAT	4
 
 /* ------------------------------------------------------- */
 /* internal functions declarations */
@@ -35,7 +45,7 @@ static int Parse_Args(int argc,char *argv[]);
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt_test.c,v 0.4 2002-05-20 11:43:04 cjm Exp $";
+static char rcsid[] = "$Id: dprt_test.c,v 0.5 2002-11-26 18:13:36 cjm Exp $";
 /**
  * Filename of file to be processed.
  */
@@ -64,6 +74,7 @@ int main(int argc, char *argv[])
 	double photometricity = 0.0;/* returned by reduction */
 	double sky_brightness = 0.0;/* returned by reduction */
 	int saturated = FALSE;/* returned by reduction */
+	int retval;
 
 	if(argc < 2)
 	{
@@ -78,8 +89,26 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 /* initialise the DpRt */
-	DpRt_Initialise();
-	if(Reduce_Type == REDUCE_TYPE_EXPOSE)
+	retval = DpRt_Initialise();
+	if(retval == FALSE)
+	{
+		DpRt_Get_Error_String(error_string);
+		fprintf(stderr,"DpRt_Initialise failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+	}
+	if(Reduce_Type == REDUCE_TYPE_MAKE_MASTER_BIAS)
+	{
+		fprintf(stdout,"Creating master bias frame from directory '%s'.\n",Filename);
+		if(DpRt_Make_Master_Bias(Filename))
+		{
+			fprintf(stdout,"Master Bias created.\n");
+		}
+		else
+		{
+			DpRt_Get_Error_String(error_string);
+			fprintf(stderr,"DpRt_Make_Master_Bias failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+		}
+	}
+	else if(Reduce_Type == REDUCE_TYPE_EXPOSE)
 	{
 		fprintf(stdout,"Reducing file '%s' as an exposure.\n",Filename);
 		if(DpRt_Expose_Reduce(Filename,&output_filename,&seeing,&counts,&x_pix,&y_pix,
@@ -96,7 +125,6 @@ int main(int argc, char *argv[])
 			DpRt_Get_Error_String(error_string);
 			fprintf(stderr,"DpRt_Expose_Reduce failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
 		}
-		
 	}
 	else if(Reduce_Type == REDUCE_TYPE_CALIBRATION)
 	{
@@ -113,6 +141,19 @@ int main(int argc, char *argv[])
 			fprintf(stderr,"DpRt_Calibrate_Reduce failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
 		}
 	}
+	else if(Reduce_Type == REDUCE_TYPE_MAKE_MASTER_FLAT)
+	{
+		fprintf(stdout,"Creating master flat frame from directory '%s'.\n",Filename);
+		if(DpRt_Make_Master_Flat(Filename))
+		{
+			fprintf(stdout,"Master Flat created.\n");
+		}
+		else
+		{
+			DpRt_Get_Error_String(error_string);
+			fprintf(stderr,"DpRt_Make_Master_Flat failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+		}
+	}
 	else
 	{
 		fprintf(stderr,"dprt_test: Unknown reduction type %d specified.\n",Reduce_Type);
@@ -122,6 +163,13 @@ int main(int argc, char *argv[])
 		free(output_filename);
 	output_filename = NULL;
 	fprintf(stdout,"Reduction completed.\n");
+/* shutdown the DpRt */
+	retval = DpRt_Shutdown();
+	if(retval == FALSE)
+	{
+		DpRt_Get_Error_String(error_string);
+		fprintf(stderr,"DpRt_Shutdown failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+	}
 	return 0;
 }
 
@@ -144,10 +192,14 @@ static int Parse_Args(int argc,char *argv[])
 	{
 		if(strcmp(argv[i],"-help")==0)
 			call_help = TRUE;
+		else if(strcmp(argv[i],"-b")==0)
+			Reduce_Type = REDUCE_TYPE_MAKE_MASTER_BIAS;
 		else if(strcmp(argv[i],"-c")==0)
 			Reduce_Type = REDUCE_TYPE_CALIBRATION;
 		else if(strcmp(argv[i],"-e")==0)
 			Reduce_Type = REDUCE_TYPE_EXPOSE;
+		else if(strcmp(argv[i],"-f")==0)
+			Reduce_Type = REDUCE_TYPE_MAKE_MASTER_FLAT;
 		else
 			strcpy(Filename,argv[i]);
 	}
@@ -166,14 +218,19 @@ static void Help(void)
 {
 	fprintf(stdout,"dprt_test Tests the reduction routines in libdprt.\n");
 	fprintf(stdout,"dprt_test does NOT test the Java JNI interface or aborting reductions.\n");
-	fprintf(stdout,"dprt_test [-c] [-e] [-help] <filename>\n");
+	fprintf(stdout,"dprt_test [-b] [-c] [-e] [-f] [-help] <filename>\n");
+	fprintf(stdout,"-b creates a master bias frame from biases in the directory specified in filename.\n");
 	fprintf(stdout,"-c reduces the filename as a calibration image.\n");
 	fprintf(stdout,"-e reduces the filename as a expose image.\n");
+	fprintf(stdout,"-f creates a master flat frame from fields in the directory specified in filename.\n");
 	fprintf(stdout,"-help prints this help message and exits.\n");
 	fprintf(stdout,"You must always specify a filename to reduce.\n");
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.4  2002/05/20 11:43:04  cjm
+** Fixed prints.
+**
 ** Revision 0.3  2002/05/20 11:33:24  cjm
 ** Added extra reduction parameters.
 **
