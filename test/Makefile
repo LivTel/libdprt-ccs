@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.10 2002-05-20 09:47:02 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.11 2004-01-30 16:45:05 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -8,7 +8,7 @@ DOCSDIR 	= $(LIBDPRT_DOC_HOME)/test
 DOCFLAGS 	= -static
 BINDIR		= $(LIBDPRT_BIN_HOME)/test/${HOSTTYPE}
 
-CFLAGS 		= -g -I$(INCDIR)
+CFLAGS 		= -g -I$(INCDIR) 
 
 SRCS 		= dprt_test.c
 OBJS 		= $(SRCS:%.c=${BINDIR}/%.o)
@@ -17,7 +17,7 @@ DOCS 		= $(SRCS:%.c=$(DOCSDIR)/%.html)
 top: ${BINDIR}/dprt_test docs
 
 ${BINDIR}/dprt_test: ${BINDIR}/dprt_test.o $(LT_LIB_HOME)/libdprt.so
-	$(CC) -o $@ ${BINDIR}/dprt_test.o -ldprt $(TIMELIB) -lm -lc
+	$(CC) -o $@ ${BINDIR}/dprt_test.o -L$(LT_LIB_HOME) -ldprt $(TIMELIB) -lm -lc
 
 ${BINDIR}/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -47,6 +47,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.10  2002/05/20 09:47:02  cjm
+# CHanged location on binaries/object files.
+#
 # Revision 0.9  2001/05/15 19:20:24  cjm
 # Added docs make.
 #
