@@ -1,19 +1,27 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.8 2001-05-15 18:38:49 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.9 2001-05-15 19:20:24 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
 
-INCDIR = $(LIBDPRT_SRC_HOME)/include
+INCDIR 		= $(LIBDPRT_SRC_HOME)/include
+DOCSDIR 	= $(LIBDPRT_DOC_HOME)/test
+DOCFLAGS 	= -static
 
-CFLAGS = -g -I$(INCDIR) -c
+CFLAGS 		= -g -I$(INCDIR) -c
 
-SRCS 	= dprt_test.c
-OBJS 	= $(SRCS:%.c=%.o)
+SRCS 		= dprt_test.c
+OBJS 		= $(SRCS:%.c=%.o)
+DOCS 		= $(SRCS:%.c=$(DOCSDIR)/%.html)
 
-top: $(LIBDPRT_BIN_HOME)/test/dprt_test
+top: $(LIBDPRT_BIN_HOME)/test/dprt_test docs
 
 $(LIBDPRT_BIN_HOME)/test/dprt_test: dprt_test.o $(LT_LIB_HOME)/libdprt.so
 	cc -o $@ dprt_test.o -ldprt $(TIMELIB) -lm -lc
+
+docs: $(DOCS)
+
+$(DOCS) : $(SRCS)
+	-$(CDOC) -d $(DOCSDIR) -h $(INCDIR) $(DOCFLAGS) $(SRCS)
 
 depend:
 	makedepend -- $(CFLAGS) -- $(SRCS)
@@ -35,6 +43,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.8  2001/05/15 18:38:49  cjm
+# Split dprt into libdprt.
+#
 # Revision 0.7  1999/12/10 12:24:43  cjm
 # Added backup target.
 #
