@@ -1,5 +1,5 @@
 /* dprt_test.c
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.5 2002-11-26 18:13:36 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.6 2004-03-31 16:46:47 cjm Exp $
 */
 /**
  * dprt_test.c Tests libdprt.a, the statically linked version of the Data Pipeline Real Time
@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <strings.h>
 #include "dprt.h"
+#include "dprt_jni_general.h"
 
 /* ------------------------------------------------------- */
 /* internal hash definitions */
@@ -45,7 +46,7 @@ static int Parse_Args(int argc,char *argv[]);
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt_test.c,v 0.5 2002-11-26 18:13:36 cjm Exp $";
+static char rcsid[] = "$Id: dprt_test.c,v 0.6 2004-03-31 16:46:47 cjm Exp $";
 /**
  * Filename of file to be processed.
  */
@@ -92,8 +93,8 @@ int main(int argc, char *argv[])
 	retval = DpRt_Initialise();
 	if(retval == FALSE)
 	{
-		DpRt_Get_Error_String(error_string);
-		fprintf(stderr,"DpRt_Initialise failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+		DpRt_JNI_Get_Error_String(error_string);
+		fprintf(stderr,"DpRt_Initialise failed:(%d) %s.\n",DpRt_JNI_Get_Error_Number(),error_string);
 	}
 	if(Reduce_Type == REDUCE_TYPE_MAKE_MASTER_BIAS)
 	{
@@ -104,8 +105,9 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			DpRt_Get_Error_String(error_string);
-			fprintf(stderr,"DpRt_Make_Master_Bias failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+			DpRt_JNI_Get_Error_String(error_string);
+			fprintf(stderr,"DpRt_Make_Master_Bias failed:(%d) %s.\n",
+				DpRt_JNI_Get_Error_Number(),error_string);
 		}
 	}
 	else if(Reduce_Type == REDUCE_TYPE_EXPOSE)
@@ -122,8 +124,9 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			DpRt_Get_Error_String(error_string);
-			fprintf(stderr,"DpRt_Expose_Reduce failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+			DpRt_JNI_Get_Error_String(error_string);
+			fprintf(stderr,"DpRt_Expose_Reduce failed:(%d) %s.\n",
+				DpRt_JNI_Get_Error_Number(),error_string);
 		}
 	}
 	else if(Reduce_Type == REDUCE_TYPE_CALIBRATION)
@@ -137,8 +140,9 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			DpRt_Get_Error_String(error_string);
-			fprintf(stderr,"DpRt_Calibrate_Reduce failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+			DpRt_JNI_Get_Error_String(error_string);
+			fprintf(stderr,"DpRt_Calibrate_Reduce failed:(%d) %s.\n",
+				DpRt_JNI_Get_Error_Number(),error_string);
 		}
 	}
 	else if(Reduce_Type == REDUCE_TYPE_MAKE_MASTER_FLAT)
@@ -150,8 +154,9 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			DpRt_Get_Error_String(error_string);
-			fprintf(stderr,"DpRt_Make_Master_Flat failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+			DpRt_JNI_Get_Error_String(error_string);
+			fprintf(stderr,"DpRt_Make_Master_Flat failed:(%d) %s.\n",
+				DpRt_JNI_Get_Error_Number(),error_string);
 		}
 	}
 	else
@@ -167,8 +172,8 @@ int main(int argc, char *argv[])
 	retval = DpRt_Shutdown();
 	if(retval == FALSE)
 	{
-		DpRt_Get_Error_String(error_string);
-		fprintf(stderr,"DpRt_Shutdown failed:(%d) %s.\n",DpRt_Get_Error_Number(),error_string);
+		DpRt_JNI_Get_Error_String(error_string);
+		fprintf(stderr,"DpRt_Shutdown failed:(%d) %s.\n",DpRt_JNI_Get_Error_Number(),error_string);
 	}
 	return 0;
 }
@@ -228,6 +233,9 @@ static void Help(void)
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.5  2002/11/26 18:13:36  cjm
+** Tests more of command set.
+**
 ** Revision 0.4  2002/05/20 11:43:04  cjm
 ** Fixed prints.
 **
