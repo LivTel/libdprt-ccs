@@ -1,6 +1,6 @@
 /* dprt_test.c  -*- mode: Fundamental;-*-
 ** dprt_test [-c][-e][-help] <filename>
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.2 2002-05-20 09:42:30 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.3 2002-05-20 11:33:24 cjm Exp $
 */
 /**
  * dprt_test.c Tests libdprt.a, the statically linked version of the Data Pipeline Real Time
@@ -35,7 +35,7 @@ static int Parse_Args(int argc,char *argv[]);
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt_test.c,v 0.2 2002-05-20 09:42:30 cjm Exp $";
+static char rcsid[] = "$Id: dprt_test.c,v 0.3 2002-05-20 11:33:24 cjm Exp $";
 /**
  * Filename of file to be processed.
  */
@@ -61,6 +61,9 @@ int main(int argc, char *argv[])
 	double peak_counts = 0.0;/* returned by reduction */
 	double x_pix = 0.0;/* returned by reduction */
 	double y_pix = 0.0;/* returned by reduction */
+	double photometricity = 0.0;/* returned by reduction */
+	double sky_brightness = 0.0;/* returned by reduction */
+	int saturated = FALSE;/* returned by reduction */
 
 	if(argc < 2)
 	{
@@ -79,10 +82,13 @@ int main(int argc, char *argv[])
 	if(Reduce_Type == REDUCE_TYPE_EXPOSE)
 	{
 		fprintf(stdout,"Reducing file '%s' as an exposure.\n",Filename);
-		if(DpRt_Expose_Reduce(Filename,&output_filename,&seeing,&counts,&x_pix,&y_pix))
+		if(DpRt_Expose_Reduce(Filename,&output_filename,&seeing,&counts,&x_pix,&y_pix,
+				&photometricity,&sky_brightness,&saturated))
 		{
 			fprintf(stdout,"Reduction returned:output_filename:%s,seeing:%.2f,counts:%.2f,"
-				"x_pix:%.2f,y_pix:%.2f\n",output_filename,seeing,counts,x_pix,y_pix);
+				"x_pix:%.2f,y_pix:%.2f,\n\tphotometricity:%.2f,sky brightness:%.2f,saturated:%d\n",
+				output_filename,seeing,counts,x_pix,y_pix,
+				photometricity,sky_brightness,saturated);
 		}
 		else
 		{
@@ -166,6 +172,9 @@ static void Help(void)
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.2  2002/05/20 09:42:30  cjm
+** Added initialise call.
+**
 ** Revision 0.1  1999/06/24 11:10:24  dev
 ** initial revision
 **
