@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.6 1999-09-08 15:26:33 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.7 1999-12-10 12:24:43 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -19,10 +19,13 @@ depend:
 	makedepend -- $(CFLAGS) -- $(SRCS)
 
 clean:
-	$(RM) $(RM_OPTIONS) $(DPRT_BIN_HOME)/test/dprt_test $(OBJS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(DPRT_BIN_HOME)/test/dprt_test $(OBJS) $(TIDY_OPTIONS)
 
 tidy:
-	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+
+backup: tidy
+	-$(RM) $(RM_OPTIONS) $(DPRT_BIN_HOME)/test/dprt_test
 
 checkin:
 	-$(CI) $(CI_OPTIONS) $(SRCS)
@@ -32,6 +35,10 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.6  1999/09/08 15:26:33  cjm
+# Changed dprt_test so that it links against the shared library.
+# This is the default library built so this will work with a top-level make.
+#
 # Revision 0.5  1999/09/08 13:57:49  cjm
 # Changed checkin target to accept failure(due to files not being checked out locked).
 # Changed checkin target to use CI_OPTIONS.
