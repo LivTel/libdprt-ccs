@@ -1,11 +1,11 @@
 /* dprt.c
 ** Entry point for Data Pipeline Reduction Routines
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/dprt.c,v 0.12 2004-03-31 16:44:25 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/dprt.c,v 0.13 2004-11-23 14:24:49 cjm Exp $
 */
 /**
  * dprt.c is the entry point for the Data Reduction Pipeline (Real Time).
  * @author Chris Mottram, LJMU
- * @version $Revision: 0.12 $
+ * @version $Revision: 0.13 $
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,7 +34,7 @@
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt.c,v 0.12 2004-03-31 16:44:25 cjm Exp $";
+static char rcsid[] = "$Id: dprt.c,v 0.13 2004-11-23 14:24:49 cjm Exp $";
 
 /* ------------------------------------------------------- */
 /* internal function declarations */
@@ -226,7 +226,7 @@ int DpRt_Expose_Reduce(char *input_filename,char **output_filename,double *seein
 	fprintf(stdout,"DpRt_Expose_Reduce:Fake:%d\n",fake);
 	if(!DpRt_JNI_Get_Property_Boolean("dprt.full_reduction",&full_reduction))
 		return FALSE;
-	fprintf(stdout,"DpRt_Calibrate_Reduce:Full Reduction Flag:%d\n",full_reduction);
+	fprintf(stdout,"DpRt_Expose_Reduce:Full Reduction Flag:%d\n",full_reduction);
 	if(fake)
 	{
 		return Expose_Reduce_Fake(input_filename,output_filename,seeing,counts,x_pix,y_pix,
@@ -807,6 +807,9 @@ static int Expose_Reduce_Fake(char *input_filename,char **output_filename,double
 
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.12  2004/03/31 16:44:25  cjm
+** Removed general JNI code and put into dprt_jni_general.c.
+**
 ** Revision 0.11  2004/02/06 17:24:12  cjm
 ** Initialised DpRt_Error_String to blank at the start of each externally callable routine.
 **
