@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.13 2004-03-31 16:46:59 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.14 2004-03-31 16:49:08 cjm Exp $
 
 include	../../../Makefile.common
 include ../../Makefile.common
@@ -10,7 +10,7 @@ DOCSDIR 	= $(LIBDPRT_CCS_DOC_HOME)/test
 DOCFLAGS 	= -static
 BINDIR		= $(LIBDPRT_CCS_BIN_HOME)/test/${HOSTTYPE}
 
-CFLAGS 		= -g -I$(INCDIR) -I$(JNIGENERALINCDIR)
+CFLAGS 		= -g -I$(INCDIR) -I$(JNIINCDIR) -I$(JNIMDINCDIR) -I$(JNIGENERALINCDIR) 
 
 SRCS 		= dprt_test.c
 OBJS 		= $(SRCS:%.c=$(BINDIR)/%.o)
@@ -49,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.13  2004/03/31 16:46:59  cjm
+# Removed general JNI code and put into dprt_jni_general.
+#
 # Revision 0.12  2004/03/31 08:57:01  cjm
 # Library now repackaged as libdprt_ccs. Directory changed to ccs specific one.
 #
