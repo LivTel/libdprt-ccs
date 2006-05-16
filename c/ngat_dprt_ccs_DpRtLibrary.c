@@ -1,11 +1,30 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of DpRt.
+
+    DpRt is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    DpRt is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DpRt; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 /* ngat_dprt_ccs_DpRtLibrary.c
 ** Implementation of Java Classes ngat.dprt.ccs.DpRtLibrary.java native Interfaces
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/ngat_dprt_ccs_DpRtLibrary.c,v 1.2 2004-03-31 16:44:25 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/ngat_dprt_ccs_DpRtLibrary.c,v 1.3 2006-05-16 18:30:40 cjm Exp $
 */
 /**
  * ngat_dprt_ccs_DpRtLibrary.c is the  `glue' between libdprt_ccs and ngat.dprt.ccs.DpRtLibrary.java.
  * @author Chris Mottram LJMU
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,7 +41,7 @@
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: ngat_dprt_ccs_DpRtLibrary.c,v 1.2 2004-03-31 16:44:25 cjm Exp $";
+static char rcsid[] = "$Id: ngat_dprt_ccs_DpRtLibrary.c,v 1.3 2006-05-16 18:30:40 cjm Exp $";
 
 /* -------------------------------------------------- */
 /* internal functions */
@@ -417,6 +436,9 @@ JNIEXPORT void JNICALL Java_ngat_dprt_ccs_DpRtLibrary_DpRt_1Finalise_1References
 /* -------------------------------------------------- */
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.2  2004/03/31 16:44:25  cjm
+** Removed general JNI code and put into dprt_jni_general.c.
+**
 ** Revision 1.1  2004/03/31 08:55:58  cjm
 ** Initial revision
 **

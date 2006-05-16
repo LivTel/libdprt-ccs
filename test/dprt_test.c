@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of DpRt.
+
+    DpRt is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    DpRt is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with DpRt; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 /* dprt_test.c
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.6 2004-03-31 16:46:47 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.7 2006-05-16 18:31:41 cjm Exp $
 */
 /**
  * dprt_test.c Tests libdprt.a, the statically linked version of the Data Pipeline Real Time
@@ -46,7 +65,7 @@ static int Parse_Args(int argc,char *argv[]);
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt_test.c,v 0.6 2004-03-31 16:46:47 cjm Exp $";
+static char rcsid[] = "$Id: dprt_test.c,v 0.7 2006-05-16 18:31:41 cjm Exp $";
 /**
  * Filename of file to be processed.
  */
@@ -233,6 +252,9 @@ static void Help(void)
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.6  2004/03/31 16:46:47  cjm
+** Modified for test program.
+**
 ** Revision 0.5  2002/11/26 18:13:36  cjm
 ** Tests more of command set.
 **
