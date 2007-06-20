@@ -19,12 +19,12 @@
 */
 /* dprt.c
 ** Entry point for Data Pipeline Reduction Routines
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/dprt.c,v 0.14 2006-05-16 18:30:39 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/dprt.c,v 0.15 2007-06-20 18:08:51 cjm Exp $
 */
 /**
  * dprt.c is the entry point for the Data Reduction Pipeline (Real Time).
  * @author Chris Mottram, LJMU
- * @version $Revision: 0.14 $
+ * @version $Revision: 0.15 $
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +32,7 @@
 #include <math.h>
 #include "fitsio.h"
 #include "dprt_jni_general.h"
-#include "rjs_dprt.h"
+#include "ccd_dprt.h"
 #include "dprt.h"
 
 /* ------------------------------------------------------- */
@@ -53,7 +53,7 @@
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt.c,v 0.14 2006-05-16 18:30:39 cjm Exp $";
+static char rcsid[] = "$Id: dprt.c,v 0.15 2007-06-20 18:08:51 cjm Exp $";
 
 /* ------------------------------------------------------- */
 /* internal function declarations */
@@ -74,10 +74,12 @@ static int Expose_Reduce_Fake(char *input_filename,char **output_filename,double
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_Number
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_General_Initialise
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Get_Property_Boolean
- * @see ../../rjs/cdocs/rjs_dprt.html#dprt_init
+ * @see ../../ccd_imager/cdocs/ccd_dprt.html#dprt_set_path
+ * @see ../../ccd_imager/cdocs/ccd_dprt.html#dprt_init
  */
 int DpRt_Initialise(void)
 {
+	char *pathname = NULL;
 	int retval,fake;
 
 
@@ -91,6 +93,21 @@ int DpRt_Initialise(void)
 	fprintf(stdout,"DpRt_Initialise:Fake:%d\n",fake);
 	if(fake == FALSE)
 	{
+		/* sort out libdprt pathname */
+		if(!DpRt_JNI_Get_Property("dprt.path",&pathname))
+			return FALSE;
+		fprintf(stdout,"Calling DpRt set path routine (dprt_set_path(%s)).\n",pathname);
+		retval = dprt_set_path(pathname);
+		if(retval == TRUE)
+		{
+			if(pathname != NULL)
+				free(pathname);
+			DpRt_JNI_Error_Number = dprt_err_int;
+			strcpy(DpRt_JNI_Error_String,dprt_err_str);
+			return FALSE;
+		}
+		if(pathname != NULL)
+			free(pathname);
 		/* call real initialisation routine */
 		fprintf(stdout,"Calling DpRt initialisation routine (dprt_init).\n");
 		retval = dprt_init();
@@ -826,6 +843,9 @@ static int Expose_Reduce_Fake(char *input_filename,char **output_filename,double
 
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.14  2006/05/16 18:30:39  cjm
+** gnuify: Added GNU General Public License.
+**
 ** Revision 0.13  2004/11/23 14:24:49  cjm
 ** Fixed DpRt_Expose_Reduce print error.
 **
