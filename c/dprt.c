@@ -19,12 +19,12 @@
 */
 /* dprt.c
 ** Entry point for Data Pipeline Reduction Routines
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/dprt.c,v 0.15 2007-06-20 18:08:51 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/dprt.c,v 0.16 2008-10-06 10:27:22 cjm Exp $
 */
 /**
  * dprt.c is the entry point for the Data Reduction Pipeline (Real Time).
  * @author Chris Mottram, LJMU
- * @version $Revision: 0.15 $
+ * @version $Revision: 0.16 $
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +53,7 @@
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt.c,v 0.15 2007-06-20 18:08:51 cjm Exp $";
+static char rcsid[] = "$Id: dprt.c,v 0.16 2008-10-06 10:27:22 cjm Exp $";
 
 /* ------------------------------------------------------- */
 /* internal function declarations */
@@ -125,7 +125,7 @@ int DpRt_Initialise(void)
 /**
  * This finction should be called when the library/DpRt is about to be shutdown.
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Get_Property_Boolean
- * @see ../../rjs/cdocs/rjs_dprt.html#dprt_close_down
+ * @see ../../ccd_imager/cdocs/.html#dprt_close_down
  */
 int DpRt_Shutdown(void)
 {
@@ -170,7 +170,7 @@ int DpRt_Shutdown(void)
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_Number
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_String
  * @see #Calibrate_Reduce_Fake
- * @see ../../rjs/cdocs/rjs_dprt.html#dprt_process
+ * @see ../../ccd_imager/cdocs/.html#dprt_process
  */
 int DpRt_Calibrate_Reduce(char *input_filename,char **output_filename,double *mean_counts,double *peak_counts)
 {
@@ -245,7 +245,7 @@ int DpRt_Calibrate_Reduce(char *input_filename,char **output_filename,double *me
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_Number
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_String
  * @see #Expose_Reduce_Fake
- * @see ../../rjs/cdocs/rjs_dprt.html#dprt_process
+ * @see ../../ccd_imager/cdocs/ccd_dprt.html#dprt_process
  */
 int DpRt_Expose_Reduce(char *input_filename,char **output_filename,double *seeing,double *counts,double *x_pix,
 		       double *y_pix,double *photometricity,double *sky_brightness,int *saturated)
@@ -312,8 +312,8 @@ int DpRt_Expose_Reduce(char *input_filename,char **output_filename,double *seein
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Get_Property_Boolean
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_Number
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_String
- * @see ../../rjs/cdocs/rjs_dprt.html#dprt_process
- * @see ../../rjs/cdocs/rjs_dprt.html#MAKE_BIAS
+ * @see ../../ccd_imager/cdocs/ccd_dprt.html#dprt_process
+ * @see ../../ccd_imager/cdocs/ccd_dprt.html#MAKE_BIAS
  */
 int DpRt_Make_Master_Bias(char *directory_name)
 {
@@ -369,8 +369,8 @@ int DpRt_Make_Master_Bias(char *directory_name)
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Get_Property_Boolean
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_Number
  * @see ../../jni_general/cdocs/dprt_jni_general.html#DpRt_JNI_Error_String
- * @see ../../rjs/cdocs/rjs_dprt.html#dprt_process
- * @see ../../rjs/cdocs/rjs_dprt.html#MAKE_FLAT
+ * @see ../../ccd_imager/cdocs/ccd_dprt.html#dprt_process
+ * @see ../../ccd_imager/cdocs/ccd_dprt.html#MAKE_FLAT
  */
 int DpRt_Make_Master_Flat(char *directory_name)
 {
@@ -843,6 +843,10 @@ static int Expose_Reduce_Fake(char *input_filename,char **output_filename,double
 
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.15  2007/06/20 18:08:51  cjm
+** Added call to dprt_set_path to set DpRt library path.
+** Gets path from dprt.path config.
+**
 ** Revision 0.14  2006/05/16 18:30:39  cjm
 ** gnuify: Added GNU General Public License.
 **
