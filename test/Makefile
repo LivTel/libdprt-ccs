@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.14 2004-03-31 16:49:08 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/Makefile,v 0.15 2008-10-07 13:59:06 cjm Exp $
 
 include	../../../Makefile.common
 include ../../Makefile.common
@@ -9,8 +9,8 @@ INCDIR 		= $(LIBDPRT_CCS_SRC_HOME)/include
 DOCSDIR 	= $(LIBDPRT_CCS_DOC_HOME)/test
 DOCFLAGS 	= -static
 BINDIR		= $(LIBDPRT_CCS_BIN_HOME)/test/${HOSTTYPE}
-
-CFLAGS 		= -g -I$(INCDIR) -I$(JNIINCDIR) -I$(JNIMDINCDIR) -I$(JNIGENERALINCDIR) 
+OBJECT_CFLAGS	= $(LIBDPRT_SRC_HOME)/object/include
+CFLAGS 		= -g -I$(INCDIR) -I$(JNIINCDIR) -I$(JNIMDINCDIR) -I$(JNIGENERALINCDIR) -I$(OBJECT_CFLAGS)
 
 SRCS 		= dprt_test.c
 OBJS 		= $(SRCS:%.c=$(BINDIR)/%.o)
@@ -19,7 +19,7 @@ DOCS 		= $(SRCS:%.c=$(DOCSDIR)/%.html)
 top: ${BINDIR}/dprt_test docs
 
 ${BINDIR}/dprt_test: $(BINDIR)/dprt_test.o $(LT_LIB_HOME)/$(LIBNAME).so
-	$(CC) -o $@ $(BINDIR)/dprt_test.o -L$(LT_LIB_HOME) -ldprt_ccs -ldprt_jni_general $(TIMELIB) -lm -lc
+	$(CC) -o $@ $(BINDIR)/dprt_test.o -L$(LT_LIB_HOME) -ldprt_ccs -ldprt_object -ldprt_jni_general $(TIMELIB) -lm -lc
 
 $(BINDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -49,6 +49,10 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.14  2004/03/31 16:49:08  cjm
+# Added -I$(JNIINCDIR) -I$(JNIMDINCDIR), as jni general now includes
+# jni.h.
+#
 # Revision 0.13  2004/03/31 16:46:59  cjm
 # Removed general JNI code and put into dprt_jni_general.
 #
@@ -92,7 +96,7 @@ checkout:
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/features.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/sys/cdefs.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/gnu/stubs.h
-/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2/include/stddef.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stddef.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/types.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/wordsize.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/typesizes.h
@@ -101,10 +105,13 @@ checkout:
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/wchar.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/wchar.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/gconv.h
-/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2/include/stdarg.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stdarg.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/stdio_lim.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/bits/sys_errlist.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/stdlib.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/include/strings.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /home/dev/src/libdprt/ccs/include/dprt.h
 /home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /home/dev/src/libdprt/jni_general/include/dprt_jni_general.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/java/j2sdk1.4.2_06/include/jni.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /usr/java/j2sdk1.4.2_06/include/linux/jni_md.h
+/home/dev/bin/libdprt/ccs/test/i386-linux/dprt_test.o: /home/dev/src/libdprt/object/include/object.h
