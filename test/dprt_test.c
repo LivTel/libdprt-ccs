@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 /* dprt_test.c
-** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.7 2006-05-16 18:31:41 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/libdprt-ccs/test/dprt_test.c,v 0.8 2008-10-07 13:58:30 cjm Exp $
 */
 /**
  * dprt_test.c Tests libdprt.a, the statically linked version of the Data Pipeline Real Time
@@ -32,6 +32,7 @@
 #include <strings.h>
 #include "dprt.h"
 #include "dprt_jni_general.h"
+#include "object.h"
 
 /* ------------------------------------------------------- */
 /* internal hash definitions */
@@ -65,7 +66,7 @@ static int Parse_Args(int argc,char *argv[]);
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: dprt_test.c,v 0.7 2006-05-16 18:31:41 cjm Exp $";
+static char rcsid[] = "$Id: dprt_test.c,v 0.8 2008-10-07 13:58:30 cjm Exp $";
 /**
  * Filename of file to be processed.
  */
@@ -115,6 +116,10 @@ int main(int argc, char *argv[])
 		DpRt_JNI_Get_Error_String(error_string);
 		fprintf(stderr,"DpRt_Initialise failed:(%d) %s.\n",DpRt_JNI_Get_Error_Number(),error_string);
 	}
+	/* initialise object logging */
+	Object_Set_Log_Handler_Function(Object_Log_Handler_Stdout);
+	Object_Set_Log_Filter_Function(Object_Log_Filter_Level_Bitwise);
+	Object_Set_Log_Filter_Level(OBJECT_LOG_BIT_GENERAL|OBJECT_LOG_BIT_OBJECT|OBJECT_LOG_BIT_FWHM);
 	if(Reduce_Type == REDUCE_TYPE_MAKE_MASTER_BIAS)
 	{
 		fprintf(stdout,"Creating master bias frame from directory '%s'.\n",Filename);
@@ -252,6 +257,9 @@ static void Help(void)
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 0.7  2006/05/16 18:31:41  cjm
+** gnuify: Added GNU General Public License.
+**
 ** Revision 0.6  2004/03/31 16:46:47  cjm
 ** Modified for test program.
 **
