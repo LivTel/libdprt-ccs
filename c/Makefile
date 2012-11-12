@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/Makefile,v 0.15 2010-01-11 12:00:14 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/c/Makefile,v 0.16 2012-11-12 16:23:41 cjm Exp $
 
 include	../../../Makefile.common
 include	../../Makefile.common
@@ -18,7 +18,7 @@ SRCS 		= dprt.c ngat_dprt_ccs_DpRtLibrary.c
 HEADERS		= $(SRCS:%.c=%.h)
 OBJS		= $(SRCS:%.c=$(BINDIR)/%.o)
 DOCS 		= $(SRCS:%.c=$(DOCSDIR)/%.html)
-LIBS		= -lcfitsio -lccd_dprt -ldprt_object -ldprt_jni_general
+LIBS		= -lcfitsio -lccd_dprt -ldprt_object -ldprt_libfits -llt_filenames -ldprt_jni_general
 
 top: shared docs
 
@@ -76,6 +76,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.15  2010/01/11 12:00:14  cjm
+# Changed RJS to CCD.
+#
 # Revision 0.14  2004/03/31 16:46:43  cjm
 # Removed general JNI code and put into dprt_jni_general.h
 #
@@ -126,69 +129,100 @@ backup: tidy
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/stdio.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/features.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/sys/cdefs.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/gnu/stubs.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stddef.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/types.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/wordsize.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/gnu/stubs.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/gnu/stubs-32.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/types.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/typesizes.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/libio.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/_G_config.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/wchar.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/wchar.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/gconv.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stdarg.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/stdio_lim.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/sys_errlist.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/stdlib.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/sys/types.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/time.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/endian.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/endian.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/sys/select.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/select.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/sigset.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/time.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/sys/sysmacros.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/pthreadtypes.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/alloca.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/string.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/math.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/huge_val.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/mathdef.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/mathcalls.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/cfitsio3.006/include/fitsio.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/cfitsio3310/include/fitsio.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/limits.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/limits.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/cfitsio3.006/include/longnam.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/posix1_lim.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/local_lim.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/linux/limits.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/posix2_lim.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/cfitsio3310/include/longnam.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/jni_general/include/dprt_jni_general.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/java/j2sdk1.4.2_06/include/jni.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/java/j2sdk1.4.2_06/include/linux/jni_md.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/java/jdk1.6.0_07/include/jni.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/java/jdk1.6.0_07/include/linux/jni_md.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/ccd_imager/ccd_dprt.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/sys/stat.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/stat.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/unistd.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/posix_opt.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/confname.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/getopt.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/errno.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/errno.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/linux/errno.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/asm/errno.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/asm-generic/errno.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/asm-generic/errno-base.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/pthread.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/sched.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/sched.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/signal.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/setjmp.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/dirent.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/dirent.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/unistd.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/posix_opt.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/bits/confname.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/sys/types.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /usr/include/time.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/object/include/object.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/ccd_imager/lt_filenames.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/ccd_imager/dprt_libfits.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/object/include/object.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/ccd_imager/generic_ccd_dprt.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/dprt.o: /home/dev/src/libdprt/ccs/include/dprt.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/stdio.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/features.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/sys/cdefs.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/gnu/stubs.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stddef.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/types.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/wordsize.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/gnu/stubs.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/gnu/stubs-32.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/types.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/typesizes.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/libio.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/_G_config.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/wchar.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/wchar.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/gconv.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stdarg.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/stdio_lim.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/sys_errlist.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/stdlib.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/sys/types.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/time.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/endian.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/endian.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/sys/select.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/select.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/sigset.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/time.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/sys/sysmacros.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/bits/pthreadtypes.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/alloca.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/include/string.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/java/j2sdk1.4.2_06/include/jni.h
-/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/java/j2sdk1.4.2_06/include/linux/jni_md.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/java/jdk1.6.0_07/include/jni.h
+/home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /usr/java/jdk1.6.0_07/include/linux/jni_md.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /home/dev/src/libdprt/ccs/include/ngat_dprt_ccs_DpRtLibrary.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /home/dev/src/libdprt/object/include/object.h
 /home/dev/bin/libdprt/ccs/c/i386-linux/ngat_dprt_ccs_DpRtLibrary.o: /home/dev/src/libdprt/ccs/include/dprt.h
