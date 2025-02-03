@@ -1,0 +1,10 @@
+# $Header: /space/home/eng/cjm/cvs/libdprt-ccs/Makefile.common,v 1.1 2025-02-03 14:48:40 cjm Exp $
+
+CCS_HOME		= ccs
+LIBDPRT_CCS_SRC_HOME	= $(LIBDPRT_SRC_HOME)/$(CCS_HOME)
+LIBDPRT_CCS_BIN_HOME	= $(LIBDPRT_BIN_HOME)/$(CCS_HOME)
+LIBDPRT_CCS_DOC_HOME	= $(LIBDPRT_DOC_HOME)/$(CCS_HOME)
+
+#
+# $Log: not supported by cvs2svn $
+#
